@@ -10,7 +10,7 @@ const router = express.Router();
 
 router.post('/signup', async (req, res) => {
     const validationResult = await signupPostRequestBodySchema.safeParseAsync(req.body);
-    if(validationResult.error){
+    if(!validationResult.success){
         return res.status(400).json({error: validationResult.error.format() });
     }
 
@@ -35,7 +35,7 @@ router.post('/login', async(req, res)=>{
 
     const loginvalidation = await loginPostRequestBodySchema.safeParseAsync(req.body);
 
-    if(loginvalidation.error){
+    if(!loginvalidation.success){
         return res.status(400).json({ error: loginvalidation.error.format() });
     }
 
@@ -54,7 +54,7 @@ router.post('/login', async(req, res)=>{
         return res.status(400).json({ error: 'Invalid password' });
     }
 
-    const token = await createuserToken({id: user.id});
+    const token = await createuserToken({id: String(user.id)});
 
     return res.json({ token });
 });
