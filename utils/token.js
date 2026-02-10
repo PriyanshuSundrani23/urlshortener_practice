@@ -12,5 +12,15 @@ export async function createuserToken(payload){
     if(!JWT_SECRET){
         throw new Error("JWT_SECRET missing");
     }
-    return jwt.sign(payloadValidationData, JWT_SECRET);
+    const token = jwt.sign(payloadValidationData, JWT_SECRET);
+    return token;
+}
+
+export function validateUserToken(token) {
+    try {
+        const payload = jwt.verify(token, JWT_SECRET)
+        return payload;
+    } catch (error) {
+        return null;
+    } 
 }
