@@ -35,6 +35,7 @@ router.post('/shorten',ensureAuthenticated, async function(req, res){
 
 router.get('/:shortCode', async function(req, res){
     const code = req.params.shortCode;
+    
     const [result] = await db.select({
         targetURL: urlsTable.targetURL,
     })
